@@ -1,4 +1,4 @@
-package com.ragdemo.model;
+package com.example.ragdemo.model;
 
 import java.util.List;
 

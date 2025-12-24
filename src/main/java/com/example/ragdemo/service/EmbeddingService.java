@@ -1,4 +1,4 @@
-package com.ragdemo.service;
+package com.example.ragdemo.service;
 
 import org.springframework.stereotype.Service;
 import java.security.MessageDigest;

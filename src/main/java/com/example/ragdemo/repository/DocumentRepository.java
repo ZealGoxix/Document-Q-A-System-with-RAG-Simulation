@@ -1,6 +1,6 @@
-package com.ragdemo.repository;
+package com.example.ragdemo.repository;
 
-import com.ragdemo.model.Document;
+import com.example.ragdemo.model.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

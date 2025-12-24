@@ -1,8 +1,8 @@
-package com.ragdemo.service;
+package com.example.ragdemo.service;
 
-import com.ragdemo.model.QAResponse;
-import com.ragdemo.model.TextChunk;
-import com.ragdemo.repository.ChunkRepository;
+import com.example.ragdemo.model.QAResponse;
+import com.example.ragdemo.model.TextChunk;
+import com.example.ragdemo.repository.ChunkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.ragdemo.model;
+package com.example.ragdemo.model;
 
 import jakarta.persistence.*;
 

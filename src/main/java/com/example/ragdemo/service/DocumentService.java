@@ -1,9 +1,9 @@
-package com.ragdemo.service;
+package com.example.ragdemo.service;
 
-import com.ragdemo.model.Document;
-import com.ragdemo.model.TextChunk;
-import com.ragdemo.repository.DocumentRepository;
-import com.ragdemo.repository.ChunkRepository;
+import com.example.ragdemo.model.Document;
+import com.example.ragdemo.model.TextChunk;
+import com.example.ragdemo.repository.DocumentRepository;
+import com.example.ragdemo.repository.ChunkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,5 +88,24 @@ public class DocumentService {
     
     public List<Document> getAllDocuments() {
         return documentRepository.findAll();
+    }
+
+    public Document saveDocument(Document document) {
+    return documentRepository.save(document);
+    }
+
+    public void processDocumentChunks(Document document) {
+        if (document.getContent() == null || document.getContent().isEmpty()) {
+            return;
+        }
+        
+        // Chunk the document
+        List<String> chunks = chunkText(document.getContent());
+        saveChunks(document, chunks);
+    }
+
+    // Add a method to get chunks for a document
+    public List<TextChunk> getDocumentChunks(Long documentId) {
+        return chunkRepository.findByDocumentId(documentId);
     }
 }

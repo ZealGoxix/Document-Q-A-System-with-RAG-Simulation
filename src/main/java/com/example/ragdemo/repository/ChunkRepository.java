@@ -1,6 +1,6 @@
-package com.ragdemo.repository;
+package com.example.ragdemo.repository;
 
-import com.ragdemo.model.TextChunk;
+import com.example.ragdemo.model.TextChunk;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
