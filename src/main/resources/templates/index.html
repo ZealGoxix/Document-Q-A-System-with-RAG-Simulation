@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Q&A System with RAG</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Document Q&A System with RAG</h1>
+            <p>Upload documents and ask questions about their content in one place</p>
+        </header>
+        
+        <div class="main-layout">
+            <!-- Left Panel: Upload Section -->
+            <div class="panel upload-panel">
+                <h2>📤 Upload Documents</h2>
+                
+                <div class="upload-form-container">
+                    <form th:action="@{/upload}" method="post" enctype="multipart/form-data" class="upload-form">
+                        <div class="form-group">
+                            <label for="file">Select Document (PDF or TXT):</label>
+                            <input type="file" id="file" name="file" accept=".pdf,.txt,.text" required>
+                            <small>Maximum file size: 10MB</small>
+                        </div>
+                        
+                        <button type="submit" class="btn upload-btn">Upload Document</button>
+                    </form>
+                    
+                    <div th:if="${message}" class="alert success">
+                        <span th:text="${message}"></span>
+                    </div>
+                    
+                    <div th:if="${error}" class="alert error">
+                        <span th:text="${error}"></span>
+                    </div>
+                </div>
+                
+                <div class="uploaded-documents" th:if="${not #lists.isEmpty(documents)}">
+                    <h3>📁 Uploaded Documents</h3>
+                    <div class="documents-list">
+                        <div class="document-item" th:each="doc : ${documents}">
+                            <div class="doc-icon">📄</div>
+                            <div class="doc-info">
+                                <strong th:text="${doc.filename}"></strong>
+                                <div class="doc-meta">
+                                    <span th:text="${#numbers.formatDecimal(doc.fileSize/1024.0, 1, 1)} + ' KB'"></span>
+                                    •
+                                    <span th:text="${#temporals.format(doc.uploadedAt, 'MM/dd HH:mm')}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Panel: Q&A Section -->
+            <div class="panel qa-panel">
+                <h2>❓ Ask Questions</h2>
+                
+                <div class="question-form">
+                    <form id="questionForm">
+                        <div class="form-group">
+                            <textarea id="questionInput" 
+                                      placeholder="Enter your question about the documents..." 
+                                      rows="4" 
+                                      required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn ask-btn">Ask Question</button>
+                            <button type="button" id="clearBtn" class="btn clear-btn">Clear</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="sample-questions">
+                    <h3>💡 Sample Questions:</h3>
+                    <div class="sample-grid">
+                        <button class="sample-btn" data-question="What is the main topic?">What is the main topic?</button>
+                        <button class="sample-btn" data-question="Explain the key points">Explain the key points</button>
+                        <button class="sample-btn" data-question="What are the recommendations?">What are the recommendations?</button>
+                        <button class="sample-btn" data-question="Summarize the document">Summarize the document</button>
+                        <button class="sample-btn" data-question="What are the main findings?">What are the main findings?</button>
+                        <button class="sample-btn" data-question="What is the conclusion?">What is the conclusion?</button>
+                    </div>
+                </div>
+                
+                <div class="answer-section">
+                    <h3>🤖 Answer</h3>
+                    <div id="answerContainer" class="answer-container">
+                        <div class="placeholder">
+                            <p>⬆️ Upload a document first, then ask questions here.</p>
+                            <p>Try one of the sample questions or type your own.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="loadingContainer" class="loading-container hidden">
+                        <div class="spinner"></div>
+                        <p>Thinking... Analyzing your documents...</p>
+                    </div>
+                    
+                    <div id="sourcesContainer" class="sources-container hidden">
+                        <h4>🔍 Sources Used</h4>
+                        <div id="sourcesList" class="sources-list"></div>
+                        <div class="response-meta">
+                            <div class="confidence-badge">
+                                Confidence: <span id="confidenceScore"></span>%
+                            </div>
+                            <div class="time-badge">
+                                Time: <span id="processingTime"></span>ms
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="info-section">
+                <h3>📝 How It Works:</h3>
+                <ol>
+                    <li><strong>Upload</strong> documents using the left panel</li>
+                    <li><strong>Wait</strong> for the system to process and index content</li>
+                    <li><strong>Ask</strong> questions using natural language</li>
+                    <li><strong>Get</strong> answers with source references</li>
+                </ol>
+                <p class="tech-info">Built with Spring Boot, H2 Database, and RAG simulation</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
